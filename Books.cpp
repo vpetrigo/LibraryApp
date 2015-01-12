@@ -1,7 +1,7 @@
 #include "Books.h"
 
 bool Book::isbn_check(const string& isbn) {
-  int num = 0, hyphen = 0;
+  int hyphen = 0;
   int pos = 0;
 
   for (int i = 0; i < isbn.size() && hyphen != 3; ++i) {
