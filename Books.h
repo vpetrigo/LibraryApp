@@ -2,7 +2,7 @@
 #include "Chrono.h"
 
 enum class Genre {
-    fiction, nonfiction, periodical,
+    fiction = 1, nonfiction, periodical,
     biography, children
 };
 
@@ -23,6 +23,7 @@ public:
     const string& title_get() const;
     const Chrono::Date& cdate_get() const;
     const Genre& genre_get() const;
+    string genre_str() const;
 private:
     bool check_out;
     string isbn;

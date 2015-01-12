@@ -59,6 +59,13 @@ bool operator!=(const Book& f, const Book& s) {
 
 ostream& operator<<(ostream& os, const Book& b) {
   return os << "Author: " << b.author_get() << '\n'
-	    << "Title: " << b.title_get() << '\n' 
-	    << "ISBN: " << b.isbn_get() << '\n';
+          << "Title: " << b.title_get() << '\n'
+          << "ISBN: " << b.isbn_get() << '\n'
+          << "Genre: " << b.genre_str() << '\n';
+}
+
+string Book::genre_str() const {
+  static const vector<string> gen_str = {"fiction", "nonfiction", "periodical", "biography", "children"};
+
+  return gen_str[int(genre) - 1];
 }
