@@ -26,6 +26,10 @@ int main() {
 
         cin >> isbn;
 
+        cout << "\nEnter the genre of this book.\n";
+
+        Genre gen = read_genre();
+
         int year = 0, mon = 0, day = 0;
 
         cout << "\nEnter the date of release (format: YY MM DD): ";
@@ -39,7 +43,7 @@ int main() {
         cin >> avail;
 
         cout << avail << '\n';
-        Book new_book {author, title, isbn, c_date, avail};
+        Book new_book {author, title, isbn, c_date, avail, gen};
 
         library.push_back(new_book);
 
@@ -73,4 +77,15 @@ string read_str() { // function for reading author and title
 }
 
 Genre read_genre() {
+    cout << "Please enter the number of genre which mathes this book:\n"
+            << "1 - fiction\n2 - nonfiction\n3 - periodical\n4 - biography\n5 - for children\n";
+
+    int genre = 0;
+
+    cin >> genre;
+
+    if (genre < int(Genre::fiction) || int(Genre::children) < genre)
+        error("Wrong genre");
+
+    return Genre(genre);
 }
