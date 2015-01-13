@@ -1,65 +1,39 @@
 #include "Books.h"
 
-string read_str();
-Genre read_genre();
+string read_str(); // Used for reading an author name and a title in right format
+Genre read_genre(); // Asked user for genre of the current book
+void read_books(vector<Book>& lib); // Prompt process for obtaining data about a book
 
 int main() {
-    vector<Book> library;
+    try {
+        vector<Book> library;   // Vector of whole books which library have
 
-    cout << "Welcome to test library program\n"
-            << "Please enter books you have:\n";
+        cout << "Welcome to test library program\n"
+                << "You will be prompted about books you have in your library\n"
+                << "Please, answer the questions and have fun.\n";
+        Book a {"DB", "AND", "77-77-7-7US", Chrono::Date{2008, Chrono::Month::Apr, 15}, 1, Genre::fiction };
+        read_books(library);
 
-    while (cin) {
-        cout << "\nEnter the author: ";
-        string author;
+        for (size_t i = 0; i < library.size(); ++i)
+            cout << library[i] << '\n';
 
-        author = read_str();
-
-        cout << "\nEnter the title: ";
-        string title;
-
-        title = read_str();
-
-        string isbn;
-
-        cout << "\nEnter the ISBN: ";
-
-        cin >> isbn;
-
-        cout << "\nEnter the genre of this book.\n";
-
-        Genre gen = read_genre();
-
-        int year = 0, mon = 0, day = 0;
-
-        cout << "\nEnter the date of release (format: YY MM DD): ";
-        cin >> year >> mon >> day;
-
-        Chrono::Date c_date {year, Chrono::Month(mon), day};
-
-        bool avail = false;
-        cout << "\nEnter the availability of the book (0 if it is absent, 1 otherwise): ";
-
-        cin >> avail;
-
-        cout << avail << '\n';
-        Book new_book {author, title, isbn, c_date, avail, gen};
-
-        library.push_back(new_book);
-
-        cout << "Would you like to add one more book?\n";
-
-        string ans;
-
-        cin >> ans;
-        if (ans != "yes" && ans != "y")
-          break;
+        return 0;
     }
+    catch (Book::Invalid& invalid) {
+        cerr << "You inserted incorrect ISBN number\n";
 
-    for (size_t i = 0; i < library.size(); ++i)
-        cout << library[i] << '\n';
+        return 1;
+    }
+    catch (exception& e) {
+        cerr << e.what() << '\n';
 
-    return 0;
+        return 2;
+    }
+    catch(...) {
+        cerr << "Something wrong happend\n";
+
+        return 3;
+    }
 }
 
 string read_str() { // function for reading author and title
@@ -88,4 +62,52 @@ Genre read_genre() {
         error("Wrong genre");
 
     return Genre(genre);
+}
+
+void read_books(vector<Book>& lib) {
+    while (cin) {
+        cout << "\nEnter the author: ";
+        string author;
+
+        author = read_str();
+
+        cout << "\nEnter the title: ";
+        string title;
+
+        title = read_str();
+
+        string isbn;
+
+        cout << "\nEnter the ISBN: ";
+
+        cin >> isbn;
+
+        cout << "\nEnter the genre of this book.\n";
+
+        Genre gen = read_genre();
+
+        int year = 0, mon = 0, day = 0;
+
+        cout << "\nEnter the date of release (format: YY MM DD): ";
+        cin >> year >> mon >> day;
+
+        Chrono::Date c_date{year, Chrono::Month(mon), day};
+
+        bool avail = false;
+        cout << "\nEnter the availability of the book (0 if it is absent, 1 otherwise): ";
+
+        cin >> avail;
+
+        Book new_book{author, title, isbn, c_date, avail, gen};
+
+        lib.push_back(new_book);
+
+        cout << "Would you like to add one more book?\n";
+
+        string ans;
+
+        cin >> ans;
+        if (ans != "yes" && ans != "y")
+            break;
+    }
 }
