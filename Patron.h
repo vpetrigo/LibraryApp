@@ -2,7 +2,7 @@
 
 class Patron {
 public:
-    Patron(const string& name, const string& lib_cardnum, const int lib_fees)
+    Patron(const string& name, const string& lib_cardnum, const bool lib_fees)
             : p_name {name}, lib_cardnum {lib_cardnum}, lib_fees {lib_fees}
     {
         if (!lcard_check(lib_cardnum))
@@ -28,7 +28,7 @@ public:
         return lib_fees;
     }
 
-    void setLib_fees(const int fees) {
+    void setLib_fees(const bool fees) {
         lib_fees = fees;
     }
 
@@ -40,5 +40,5 @@ public:
 private:
     string p_name;
     string lib_cardnum; // library card number in format Num-Num-(Num | Alph)
-    int lib_fees;
+    bool lib_fees;
 };

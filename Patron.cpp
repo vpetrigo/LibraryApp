@@ -39,5 +39,5 @@ bool Patron::lcard_check(const string& ln) {
 }
 
 bool Patron::have_fee() {
-    return bool(lib_fees);
+    return lib_fees;
 }

@@ -12,5 +12,6 @@ add_library(Patron Patron.cpp)
 add_library(Library_cl Library.cpp)
 
 set(SOURCE_FILES Test.cpp)
+target_link_libraries(Library_cl Books Chrono)
 add_executable(LibraryApp ${SOURCE_FILES})
-target_link_libraries(LibraryApp Library_cl Chrono Books Patron)
+target_link_libraries(LibraryApp Patron Library_cl)

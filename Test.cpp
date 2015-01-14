@@ -9,9 +9,8 @@ int main() {
 
         my_lib.read_patrons();
         my_lib.read_books();
-        Patron v {"Volodja Petrigo", "123-456-RU", 0};
+        Patron v {"Vladimir Petrigo", "123-456-RU", 0};
         Book b {"Alexey Tolstoy", "Upir", "45-987-1-RU", Chrono::Date{2001, Chrono::Month::Jan, 1}, 1, Genre(1)};
-        my_lib.book_chout(v, b);
         my_lib.book_chout(v, b);
 
         vector<Patron> clients = my_lib.get_Patrons();
@@ -26,6 +25,11 @@ int main() {
 
         for (int i = 0; i < tr.size(); ++i)
             cout << tr[i] << '\n';
+
+        vector<Patron> fee_owes = my_lib.have_arrears();
+
+        for (int i = 0; i < fee_owes.size(); ++i)
+            cout << fee_owes[i].getP_name() << '\n';
 
         return 0;
     }
