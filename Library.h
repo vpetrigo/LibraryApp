@@ -28,8 +28,9 @@ public:
         return trans;
     }
 
-    int is_user(const string& name, const string& l_cnum);
-    int is_book(const string& isbn);
+    int is_user(const string& name, const string& l_cnum); // check if user with proper name and library cardnumber is in the database
+    int is_book(const string& isbn);    // check by an isbn if a book in the library
+    vector<Patron> have_arrears(); // output all patrons who have fees;
 
     static constexpr int nusr = -1;
     static constexpr int nbk = -1;

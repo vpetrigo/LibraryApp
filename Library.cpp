@@ -128,3 +128,13 @@ ostream &operator<<(ostream &os, const Transaction &tr) {
     return os << "Book:\n" << tr.book << "was checked out in " << tr.date
             << " by " << tr.patron.getP_name() << ": " << tr.patron.getLib_cardnum() << '\n';
 }
+
+vector<Patron> Library::have_arrears() {
+    vector<Patron> fee_owners;
+
+    for (int i = 0; i < patrons.size(); ++i)
+        if (patrons[i].have_fee())
+            fee_owners.push_back(patrons[i]);
+
+    return fee_owners;
+}
