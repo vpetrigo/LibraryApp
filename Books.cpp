@@ -2,7 +2,6 @@
 
 bool Book::isbn_check() {
   int pos = 0;
-  int (*analyse_fun)(int); // pointer to char analyser function
 
   vector<string> isbn_parts;
 
@@ -11,8 +10,7 @@ bool Book::isbn_check() {
     for ( ; pos < isbn.size() && isbn[pos] != '-'; ++pos)
       part += isbn[pos];
 
-    if (isbn[pos] == '-')
-      ++pos;
+    ++pos; // increment pos for passing a hyphen
 
     isbn_parts.push_back(part);
   }
@@ -20,11 +18,17 @@ bool Book::isbn_check() {
   if (isbn_parts.size() != Book::isbn_len)
     return false;
 
+  for (int i = 0; i < isbn_parts.size(); ++i)
+    cout << isbn_parts[i] << '\n';
+
+  int (*analyse_fun)(int); // pointer to char analyser function
+
   for (int i = 0; i < Book::isbn_len; ++i) { // check first three parts of ISBN number which has to be numbers
     if (isbn_parts[i].size() == 0)
       return false;
 
-    analyse_fun = (i != Book::isbn_len - 1) ? (int (*)(int)) isdigit : (int (*)(int)) isalnum;
+    analyse_fun = (i != Book::isbn_len - 1) ? (int (*)(int)) isdigit : (int (*)(int)) isalnum; // for the 4th part of ISBN
+                                                                                              // accept numbers and alphabet in the string
 
     for (int j = 0; j < isbn_parts[i].size(); ++j)
       if (!analyse_fun(isbn_parts[i][j])) // Check if the first three parts of ISBN
@@ -55,7 +59,7 @@ const Genre& Book::genre_get() const {
 }
 
 bool Book::have_book() {
-  return (check_out) ? true : false;
+  return check_out;
 }
 
 bool operator==(const Book& f, const Book& s) {
@@ -76,5 +80,9 @@ ostream& operator<<(ostream& os, const Book& b) {
 const string& Book::genre_str() const {
   static const vector<string> gen_str = {"fiction", "nonfiction", "periodical", "biography", "children"};
 
-  return gen_str[static_cast<int>(genre) - 1];
+  return gen_str[int(genre) - 1];
+}
+
+bool Book::genre_check() {
+  return !(genre < Genre::fiction || Genre::children < genre);
 }

@@ -8,16 +8,23 @@ enum class Genre {
 
 class Book {
 public:
-    class Invalid {};
-    const int isbn_len = 4; // ISBN pattern is Num-Num-Num-(Num | Alph); 4 parts at all
+    enum class Invalid {
+        author, title, isbn, cr_date, genre
+    };
+
+    static constexpr int isbn_len = 4; // ISBN pattern is Num-Num-Num-(Num | Alph); 4 parts at all
 
     Book(const string& author, const string& title, const string& isbn, const Chrono::Date& cr_date, bool ch_out, const Genre& gen) :
        author{author}, title{title}, isbn{isbn}, cr_date{cr_date}, check_out{ch_out}, genre{gen} {
-         if (!isbn_check())
-          throw Invalid{};
+        if (!isbn_check())
+            throw Invalid::isbn;
+
+        if (!genre_check())
+            throw Invalid::genre;
       }
 
     bool isbn_check();
+    bool genre_check();
     bool have_book();
     const string& isbn_get() const;
     const string& author_get() const;
