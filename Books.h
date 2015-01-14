@@ -32,6 +32,11 @@ public:
     const Chrono::Date& cdate_get() const;
     const Genre& genre_get() const;
     const string& genre_str() const;
+
+    void setCheck_out(bool chout) {
+        check_out = chout;
+    }
+
 private:
     bool check_out;
     string isbn;

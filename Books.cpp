@@ -18,9 +18,6 @@ bool Book::isbn_check() {
   if (isbn_parts.size() != Book::isbn_len)
     return false;
 
-  for (int i = 0; i < isbn_parts.size(); ++i)
-    cout << isbn_parts[i] << '\n';
-
   int (*analyse_fun)(int); // pointer to char analyser function
 
   for (int i = 0; i < Book::isbn_len; ++i) { // check first three parts of ISBN number which has to be numbers
