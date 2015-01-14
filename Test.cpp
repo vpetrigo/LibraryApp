@@ -1,4 +1,5 @@
 #include "Books.h"
+#include "Patron.h"
 
 string read_str(); // Used for reading an author name and a title in right format
 Genre read_genre(); // Asked user for genre of the current book
@@ -11,16 +12,48 @@ int main() {
         cout << "Welcome to test library program\n"
                 << "You will be prompted about books you have in your library\n"
                 << "Please, answer the questions and have fun.\n";
-        Book a {"DB", "AND", "77-77-7-7US", Chrono::Date{2008, Chrono::Month::Apr, 15}, 1, Genre::fiction };
-        read_books(library);
 
-        for (size_t i = 0; i < library.size(); ++i)
-            cout << library[i] << '\n';
+        //read_books(library);
+
+        //for (size_t i = 0; i < library.size(); ++i)
+        //    cout << library[i] << '\n';
+
+        /* Patron test {"Ivan Ivanov", "7-1-7987qwe", 100};
+
+        cout << test.getP_name() << '\n';
+        cout << test.getLib_cardnum() << '\n';
+        cout << test.getLib_fees() << '\n';
+        cout << test.have_fee() << '\n';
+
+        test.setLib_cardnum("7-7-7");
+        test.setLib_fees(0);
+
+        cout << test.getP_name() << '\n';
+        cout << test.getLib_cardnum() << '\n';
+        cout << test.getLib_fees() << '\n';
+        cout << test.have_fee() << '\n'; */
 
         return 0;
     }
     catch (Book::Invalid& invalid) {
-        cerr << "You inserted incorrect ISBN number\n";
+        cerr << "You inserted incorrect ";
+        switch (invalid) {
+            case Book::Invalid::author:
+                cerr << "author name\n";
+                break;
+            case Book::Invalid::title:
+                cerr << "title\n";
+                break;
+            case Book::Invalid::isbn:
+                cerr << "ISBN number\n";
+                break;
+            case Book::Invalid::genre:
+                cerr << "genre\n";
+                break;
+            default:
+                cerr << "something else\n";
+                break;
+        }
 
         return 1;
     }
@@ -29,10 +62,15 @@ int main() {
 
         return 2;
     }
+    catch (Chrono::Date::Invalid& i) {
+        cerr << "You inserted the wrong date\n";
+
+        return 3;
+    }
     catch(...) {
         cerr << "Something wrong happend\n";
 
-        return 3;
+        return 4;
     }
 }
 
@@ -57,9 +95,6 @@ Genre read_genre() {
     int genre = 0;
 
     cin >> genre;
-
-    if (genre < int(Genre::fiction) || int(Genre::children) < genre)
-        error("Wrong genre");
 
     return Genre(genre);
 }
