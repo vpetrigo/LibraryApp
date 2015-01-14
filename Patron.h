@@ -29,10 +29,13 @@ public:
     }
 
     void setLib_fees(const int fees) {
-        lib_fees = lib_fees;
+        lib_fees = fees;
     }
 
     bool lcard_check(const string& ln);
+    bool have_fee();
+
+    static constexpr int lcard_len = 3;
 
 private:
     string p_name;
